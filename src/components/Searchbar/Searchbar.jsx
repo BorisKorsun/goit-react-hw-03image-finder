@@ -1,3 +1,4 @@
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { SearchBarContainer } from './Searchbar.styled';
 import { Formik } from 'formik';
@@ -9,32 +10,53 @@ import {
   Icon,
 } from './Searchbar.styled';
 
-const Searchbar = ({ onSubmit }) => {
-  const initialValues = {
+class Searchbar extends Component {
+  state = {
+    queryValue: '',
+  };
+
+  initialValue = {
     query: '',
   };
 
-  return (
-    <SearchBarContainer>
-      <Formik initialValues={initialValues} onSubmit={onSubmit}>
-        <SearchForm>
-          <SearchFormBtn type="submit">
-            <Icon width="20" height="20" />
-            <BtnLabel>Search</BtnLabel>
-          </SearchFormBtn>
+  handleInputChange = e => {
+    this.setState({ queryValue: e.target.value });
+  };
 
-          <Input
-            name="query"
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-          />
-        </SearchForm>
-      </Formik>
-    </SearchBarContainer>
-  );
-};
+  handleSubmit = () => {
+    const { onSubmit } = this.props;
+    const { queryValue } = this.state;
+    onSubmit(queryValue);
+    this.setState({ queryValue: '' });
+  };
+
+  render() {
+    const { queryValue } = this.state;
+
+    return (
+      <SearchBarContainer>
+        <Formik initialValues={this.initialValue} onSubmit={this.handleSubmit}>
+          <SearchForm>
+            <SearchFormBtn type="submit">
+              <Icon width="20" height="20" />
+              <BtnLabel>Search</BtnLabel>
+            </SearchFormBtn>
+
+            <Input
+              value={queryValue}
+              onChange={this.handleInputChange}
+              name="query"
+              type="text"
+              autoComplete="off"
+              autoFocus
+              placeholder="Search images and photos"
+            />
+          </SearchForm>
+        </Formik>
+      </SearchBarContainer>
+    );
+  }
+}
 
 export default Searchbar;
 

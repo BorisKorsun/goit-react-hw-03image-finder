@@ -9,9 +9,8 @@ class App extends Component {
     queryName: '',
   };
 
-  handleFormSubmit = (values, actions) => {
-    console.log(values)
-    console.log(actions)
+  handleFormSubmit = (query) => {
+    console.log(query)
   }
 
   render() {
