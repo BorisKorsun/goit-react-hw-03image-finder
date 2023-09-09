@@ -48,10 +48,15 @@ class ImageGallery extends Component {
       service
         .getPageImage(page)
         .then(({ data }) =>
-          this.setState({
-            gallery: data.hits,
-            status: STATE_MACHINE.RESOLVED,
-          }).catch(error => this.setState({error, status: STATE_MACHINE.REJECTED}))
+          this.setState(prev => {
+            return {
+              gallery: [...prev.gallery, ...data.hits],
+              status: STATE_MACHINE.RESOLVED,
+            };
+          })
+        )
+        .catch(error =>
+          this.setState({ error, status: STATE_MACHINE.REJECTED })
         );
     }
   }
@@ -66,7 +71,7 @@ class ImageGallery extends Component {
     const { status, gallery } = this.state;
 
     if (status === STATE_MACHINE.PENDING) {
-      return <GalleryPendingView />;
+      return <GalleryPendingView cards={gallery} />;
     }
 
     if (status === STATE_MACHINE.REJECTED) {
