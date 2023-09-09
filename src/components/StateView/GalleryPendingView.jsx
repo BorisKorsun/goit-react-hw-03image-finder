@@ -1,4 +1,4 @@
-
+import PropTypes from 'prop-types';
 
 import { Gallery } from 'components/ImageGallery/ImageGallery.styled';
 import ImageGalleryItem from 'components/ImageGalleryItem';
@@ -12,7 +12,11 @@ export const GalleryPendingView = ({ cards }) => {
           return <ImageGalleryItem tags={tags} key={id} url={webformatURL} />;
         })}
       </Gallery>
-      <Loader/>
+      <Loader />
     </>
   );
+};
+
+GalleryPendingView.propTypes = {
+  cards: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
 };

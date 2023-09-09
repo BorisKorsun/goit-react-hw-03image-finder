@@ -36,4 +36,10 @@ export const GalleryResolvedView = ({
 
 GalleryResolvedView.propTypes = {
   cards: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  toggleModal: PropTypes.func.isRequired,
+  onImageClick: PropTypes.func.isRequired,
+  onBtnClick: PropTypes.func.isRequired,
+  isModalShown: PropTypes.bool.isRequired,
+  modalCard: PropTypes.string.isRequired,
+
 };

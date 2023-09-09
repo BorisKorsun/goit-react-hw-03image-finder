@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import API from 'service';
 
@@ -73,17 +74,19 @@ class ImageGallery extends Component {
   onImageClick = imageId => {
     const { gallery } = this.state;
 
-    this.toggleModal()
+    this.toggleModal();
     this.setState(prev => {
-      return { modalCardUrl: gallery.find(({ id }) => id === imageId).largeImageURL };
+      return {
+        modalCardUrl: gallery.find(({ id }) => id === imageId).largeImageURL,
+      };
     });
   };
 
   toggleModal = () => {
-    this.setState((prev) => {
-        return {showModal: !prev.showModal}
-    })
-  }
+    this.setState(prev => {
+      return { showModal: !prev.showModal };
+    });
+  };
 
   render() {
     const { status, gallery, error, showModal, modalCardUrl } = this.state;
@@ -99,7 +102,7 @@ class ImageGallery extends Component {
     if (status === STATE_MACHINE.RESOLVED) {
       return (
         <GalleryResolvedView
-        toggleModal={this.toggleModal}
+          toggleModal={this.toggleModal}
           onImageClick={this.onImageClick}
           onBtnClick={this.onLoadMoreClick}
           cards={gallery}
@@ -112,3 +115,7 @@ class ImageGallery extends Component {
 }
 
 export default ImageGallery;
+
+ImageGallery.propTypes = {
+    query: PropTypes.string.isRequired,
+}

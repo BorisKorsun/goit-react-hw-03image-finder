@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Overlay, ModalContainer } from './Modal.styled';
 import { createPortal } from 'react-dom';
+import PropTypes from 'prop-types';
 
 const modalRoot = document.querySelector('#modal-root');
 
@@ -42,3 +43,8 @@ class Modal extends Component {
   }
 }
 export default Modal;
+
+Modal.propTypes = {
+  toggleModal: PropTypes.func.isRequired,
+  image: PropTypes.string.isRequired,
+}
