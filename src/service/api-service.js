@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 const API_KEY = '27031452-a137835af82b3a6efb2323c99';
-const BASE_URL = 'GEThttps://pixabay.com/api/';
+const BASE_URL = 'https://pixabay.com/api/';
 
 class API {
   constructor() {
-    axios.create({
+    this.service = axios.create({
       baseURL: BASE_URL,
       params: {
         q: '',
@@ -20,19 +20,21 @@ class API {
 
   async getQueryImages(q) {
     this.params.q = q;
-    return await axios.get();
+    return await this.service.get();
   }
 
   async getPageImage(page) {
     this.params.page = page;
-    return await axios.get();
+    return await this.service.get();
   }
 
   get params() {
-    return this.params;
+    return this.service.defaults.params;
   }
 
   set params(value) {
     this.service.defaults.params = value;
   }
 }
+
+export default API;
