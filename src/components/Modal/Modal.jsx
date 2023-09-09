@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
-import { Overlay, ModalContainer, Image } from './Modal.styled';
+import { Overlay, ModalContainer } from './Modal.styled';
 import { createPortal } from 'react-dom';
 
 const modalRoot = document.querySelector('#modal-root');
 
 class Modal extends Component {
   componentDidMount() {
-    document.addEventListener('keydown', this.onKeyDown)
-  };
+    document.addEventListener('keydown', this.onKeyDown);
+  }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.onKeyDown)
+    document.removeEventListener('keydown', this.onKeyDown);
   }
 
-  onKeyDown = (e) => {
-    console.log(e.code)
-    if(e.code === 'Escape') {
+  onKeyDown = e => {
+    console.log(e.code);
+    if (e.code === 'Escape') {
       this.props.toggleModal();
     }
-  }
+  };
 
   onBackDropClick = e => {
     const target = e.target;
@@ -33,7 +33,7 @@ class Modal extends Component {
 
     return createPortal(
       <Overlay onClick={this.onBackDropClick}>
-        <ModalContainer >
+        <ModalContainer>
           <img src={image} alt="" />
         </ModalContainer>
       </Overlay>,
