@@ -1,5 +1,7 @@
+import { GalleryButton } from "./Button.styled";
+
 const Button = () => {
-  return <button type="button"></button>;
+  return <GalleryButton type="button"></GalleryButton>;
 };
 
 export default Button;
