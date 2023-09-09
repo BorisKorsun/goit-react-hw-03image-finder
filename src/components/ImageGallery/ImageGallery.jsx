@@ -21,6 +21,9 @@ class ImageGallery extends Component {
   state = {
     gallery: [],
     page: 1,
+    showModal: false,
+    imageId: null,
+    modalCardUrl: '',
     error: null,
     status: STATE_MACHINE.IDLE,
   };
@@ -67,22 +70,41 @@ class ImageGallery extends Component {
     });
   };
 
+  onImageClick = imageId => {
+    const { gallery } = this.state;
+
+    this.toggleModal()
+    this.setState(prev => {
+      return { modalCardUrl: gallery.find(({ id }) => id === imageId).largeImageURL };
+    });
+  };
+
+  toggleModal = () => {
+    this.setState((prev) => {
+        return {showModal: !prev.showModal}
+    })
+  }
+
   render() {
-    const { status, gallery } = this.state;
+    const { status, gallery, error, showModal, modalCardUrl } = this.state;
 
     if (status === STATE_MACHINE.PENDING) {
       return <GalleryPendingView cards={gallery} />;
     }
 
     if (status === STATE_MACHINE.REJECTED) {
-      return <GalleryRejectedView />;
+      return <GalleryRejectedView errorMessage={error} />;
     }
 
     if (status === STATE_MACHINE.RESOLVED) {
       return (
         <GalleryResolvedView
+        toggleModal={this.toggleModal}
+          onImageClick={this.onImageClick}
           onBtnClick={this.onLoadMoreClick}
           cards={gallery}
+          isModalShown={showModal}
+          modalCard={modalCardUrl}
         />
       );
     }

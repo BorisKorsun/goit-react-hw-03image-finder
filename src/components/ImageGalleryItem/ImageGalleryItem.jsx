@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import { Item, Image } from './ImageGalleryItem.styled';
 
-const ImageGalleryItem = ({ url, tags }) => {
+const ImageGalleryItem = ({ url, tags, onClick, id }) => {
   return (
     <Item>
-      <Image src={url} alt={tags} />
+      <Image onClick={() => onClick(id)} src={url} alt={tags} />
     </Item>
   );
 };

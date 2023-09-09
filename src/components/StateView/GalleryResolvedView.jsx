@@ -3,18 +3,33 @@ import { Gallery } from 'components/ImageGallery/ImageGallery.styled';
 
 import ImageGalleryItem from 'components/ImageGalleryItem';
 import Button from 'components/Button';
+import Modal from 'components/Modal';
 
-export const GalleryResolvedView = ({ cards, onBtnClick }) => {
+export const GalleryResolvedView = ({
+  cards,
+  onBtnClick,
+  onImageClick,
+  isModalShown,
+  modalCard,
+  toggleModal,
+}) => {
   return (
     <>
+      {isModalShown && <Modal toggleModal={toggleModal} image={modalCard} />}
       <Gallery>
         {cards.map(({ webformatURL, id, tags }) => {
-          return <ImageGalleryItem tags={tags} key={id} url={webformatURL} />;
+          return (
+            <ImageGalleryItem
+              id={id}
+              onClick={onImageClick}
+              tags={tags}
+              key={id}
+              url={webformatURL}
+            />
+          );
         })}
-        
       </Gallery>
-      <Button onClick={onBtnClick}>Load more</Button>
-      ;
+      <Button onClick={onBtnClick}>Load more</Button>;
     </>
   );
 };
