@@ -1,7 +1,7 @@
 import { GalleryButton } from "./Button.styled";
 
-const Button = () => {
-  return <GalleryButton type="button"></GalleryButton>;
+const Button = ({children, onClick}) => {
+  return <GalleryButton onClick={onClick} type="button">{children}</GalleryButton>;
 };
 
 export default Button;

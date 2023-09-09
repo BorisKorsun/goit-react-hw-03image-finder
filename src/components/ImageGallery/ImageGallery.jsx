@@ -20,11 +20,14 @@ const STATE_MACHINE = {
 class ImageGallery extends Component {
   state = {
     gallery: [],
+    page: 1,
     error: null,
     status: STATE_MACHINE.IDLE,
   };
 
   componentDidUpdate(prevProps, prevState) {
+    const { page } = this.state;
+    const oldPage = prevState.page;
     const { query } = this.props;
     const oldQuery = prevProps.query;
 
@@ -39,7 +42,25 @@ class ImageGallery extends Component {
           this.setState({ error, status: STATE_MACHINE.REJECTED })
         );
     }
+
+    if (page !== oldPage) {
+      this.setState({ status: STATE_MACHINE.PENDING });
+      service
+        .getPageImage(page)
+        .then(({ data }) =>
+          this.setState({
+            gallery: data.hits,
+            status: STATE_MACHINE.RESOLVED,
+          }).catch(error => this.setState({error, status: STATE_MACHINE.REJECTED}))
+        );
+    }
   }
+
+  onLoadMoreClick = () => {
+    this.setState(prev => {
+      return { page: prev.page + 1 };
+    });
+  };
 
   render() {
     const { status, gallery } = this.state;
@@ -53,7 +74,12 @@ class ImageGallery extends Component {
     }
 
     if (status === STATE_MACHINE.RESOLVED) {
-      return <GalleryResolvedView cards={gallery} />;
+      return (
+        <GalleryResolvedView
+          onBtnClick={this.onLoadMoreClick}
+          cards={gallery}
+        />
+      );
     }
   }
 }
