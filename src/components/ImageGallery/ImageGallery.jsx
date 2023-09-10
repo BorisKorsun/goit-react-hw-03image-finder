@@ -75,11 +75,7 @@ class ImageGallery extends Component {
     const { gallery } = this.state;
 
     this.toggleModal();
-    this.setState(prev => {
-      return {
-        modalCardUrl: gallery.find(({ id }) => id === imageId).largeImageURL,
-      };
-    });
+    this.setState({modalCardUrl: gallery.find(({ id }) => id === imageId).largeImageURL});
   };
 
   toggleModal = () => {
@@ -117,5 +113,5 @@ class ImageGallery extends Component {
 export default ImageGallery;
 
 ImageGallery.propTypes = {
-    query: PropTypes.string.isRequired,
-}
+  query: PropTypes.string.isRequired,
+};

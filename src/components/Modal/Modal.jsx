@@ -15,7 +15,6 @@ class Modal extends Component {
   }
 
   onKeyDown = e => {
-    console.log(e.code);
     if (e.code === 'Escape') {
       this.props.toggleModal();
     }
